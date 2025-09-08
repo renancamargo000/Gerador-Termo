@@ -337,8 +337,7 @@
             yOffset += 20;
 
             doc.setFontSize(12);
-            const textoDeclaracao = `Declaro ter recebido da empresa TELLERINA COMÉRCIO DE PRESENTES E\nARTIGOS PARA DECORAÇÃO S/A, CNPJ: 84.453.844/0342-44 a título de\n" +
-                "empréstimo, o equipamento cujas características estão abaixo, para o meu uso\nexclusivo, responsabilizando-me pelo seu uso e sua guarda.`;
+            const textoDeclaracao = `Declaro ter recebido da empresa TELLERINA COMÉRCIO DE PRESENTES E\nARTIGOS PARA DECORAÇÃO S/A, CNPJ: 84.453.844/0342-44 a título de\n" + "empréstimo, o equipamento cujas características estão abaixo, para o meu uso\nexclusivo, responsabilizando-me pelo seu uso e sua guarda.`;
             doc.text(textoDeclaracao, 15, yOffset);
             yOffset += 40;
 
@@ -451,7 +450,7 @@
                     doc.setFontSize(12);
                     doc.text(img.label, 15, yOffset);
                     yOffset += 5;
-                    doc.addImage(base64, 'JPEG', 15, yOffset, 180, 120);
+                    doc.addImage(base64, 'JPEG', 15, yOffset, 100, 70);
                     yOffset += 130;
                 }
             }
