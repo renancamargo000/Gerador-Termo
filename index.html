@@ -424,36 +424,36 @@
             // ----------------------------------------------------
             // CÓDIGO PARA ADICIONAR IMAGENS
             // ----------------------------------------------------
-            doc.setFontSize(14);
-            doc.text("Fotos do Equipamento", 15, yOffset);
-            yOffset += 10;
+                doc.setFontSize(14);
+                doc.text("Fotos do Equipamento", 15, yOffset);
+                yOffset += 10;
 
-            const imageFiles = [
-                { id: 'tela', label: 'Tela' },
-                { id: 'teclado-foto', label: 'Teclado' },
-                { id: 'lateral-direita', label: 'Lateral Direita' },
-                { id: 'lateral-esquerda', label: 'Lateral Esquerda' },
-                { id: 'tampa-fechada', label: 'Tampa Fechada' }
-            ];
+                const imageFiles = [
+                    { id: 'tela', label: 'Tela' },
+                    { id: 'teclado-foto', label: 'Teclado' },
+                    { id: 'lateral-direita', label: 'Lateral Direita' },
+                    { id: 'lateral-esquerda', label: 'Lateral Esquerda' },
+                    { id: 'tampa-fechada', label: 'Tampa Fechada' }
+                ];
 
-            for (const img of imageFiles) {
-                const input = document.getElementById(img.id);
-                if (input.files && input.files[0]) {
-                    const file = input.files[0];
-                    const base64 = await readImage(file);
+                for (const img of imageFiles) {
+                    const input = document.getElementById(img.id);
+                    if (input.files && input.files[0]) {
+                        const file = input.files[0];
+                        const base64 = await readImage(file);
 
-                    if (yOffset + 100 > doc.internal.pageSize.height) {
-                        doc.addPage();
-                        yOffset = 15;
+                        if (yOffset + 100 > doc.internal.pageSize.height) { // Você pode ajustar este valor também se o 100 for muito alto para quebrar a página
+                            doc.addPage();
+                            yOffset = 15;
+                        }
+
+                        doc.setFontSize(12);
+                        doc.text(img.label, 15, yOffset);
+                        yOffset += 5; // Espaçamento entre o label e a imagem
+                        doc.addImage(base64, 'JPEG', 15, yOffset, 100, 70); // Imagem com 70 de altura
+                        yOffset += 75; // <-- Alterado aqui! 70 (altura da imagem) + 5 (espaço extra após a imagem)
                     }
-
-                    doc.setFontSize(12);
-                    doc.text(img.label, 15, yOffset);
-                    yOffset += 5;
-                    doc.addImage(base64, 'JPEG', 15, yOffset, 100, 70);
-                    yOffset += 100;
                 }
-            }
 
             // ----------------------------------------------------
             // ADICIONAR TEXTO DE DECLARAÇÃO FINAL E DATA
