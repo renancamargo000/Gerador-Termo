@@ -6,6 +6,7 @@
     <title>Vivara - Termo de Responsabilidade</title>
     <link rel="shortcut icon" href="imagens/tellerina-icon.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
+    
      <style>
         @import url('https://fonts.googleapis.com/css2?family=Cossette+Titre:wght@400;700&family=Roboto:ital,wdth@0,75..100;1,75..100&display=swap');
 
@@ -75,7 +76,7 @@
             margin: 0 auto 40px auto;
             border-radius: 10px;
             box-shadow: -7px 9px 20px black;
-            background-color: #ECA57F;
+            background-color: #f8f8f8;
             padding: 20px;
             box-sizing: border-box;
             border: 1px solid #e2976e;
@@ -108,6 +109,11 @@
             box-sizing: border-box;
             border-radius: 20px;
             border: 1px solid #ccc;
+        }
+
+        textarea#obs-touchpad{
+            font-size: 20px;
+            font-weight: bold;
         }
 
         /* Estilos específicos para o checklist */
@@ -185,7 +191,6 @@
         <label for="nome-responsavel" style="text-align: center;">Responsavel (TI): 
             <input type="text" id="responsavel" style="display: block; margin: 0 auto;" required>
         </label>
-
 
         <fieldset>
             <legend>Dados do Colaborador</legend>
@@ -278,8 +283,8 @@
                 <label>Estado do Touchpad</label> <br>
                 <input type="radio" name="touchpad-estado" value="Em Condições"> <label>Em Condições</label>
                 <input type="radio" name="touchpad-estado" value="Danificado"> <label>Danificado</label>
-                <textarea id="obs-touchpad" placeholder="Informe Observações"></textarea>
             </div>
+            <textarea id="obs-touchpad" required placeholder="Informe o Numero do Chamado"></textarea>
         </fieldset>
 
         <fieldset>
@@ -309,189 +314,215 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
+
 
     <script>
-        async function gerarPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            let yOffset = 15;
+       async function gerarPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    let yOffset = 15; // Posição vertical inicial
 
-            // Função para ler o arquivo de imagem e retornar uma Promessa
-            const readImage = (file) => {
-                return new Promise((resolve) => {
-                    const reader = new FileReader();
-                    reader.onload = () => resolve(reader.result);
-                    reader.readAsDataURL(file);
-                });
-            };
+    // Função para ler o arquivo de imagem e retornar uma Promessa
+    const readImage = (file) => {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.readAsDataURL(file);
+        });
+    };
 
-            // ----------------------------------------------------
-            // CÓDIGO DO CABEÇALHO
-            // ----------------------------------------------------
-            const logoTellerina = 'imagens/tellerina-icon.png'; 
-            doc.addImage(logoTellerina, 'PNG', 15, 10, 50, 15);
-            yOffset = 40;
+    // --- CÓDIGO DO CABEÇALHO ---
+    const logoTellerina = 'imagens/tellerina-icon.png';
+    doc.addImage(logoTellerina, 'PNG', 15, 10, 50, 15);
+    yOffset = 40;
 
-            doc.setFontSize(14);
-            doc.text("TERMO DE RESPONSABILIDADE DE EQUIPAMENTOS DE TI", 105, yOffset, null, null, "center");
-            yOffset += 20;
+    doc.setFontSize(14);
+    doc.text("TERMO DE RESPONSABILIDADE DE EQUIPAMENTOS DE TI", 105, yOffset, null, null, "center");
+    yOffset += 20;
 
-            doc.setFontSize(12);
-            const textoDeclaracao = "Declaro ter recebido da empresa TELLERINA COMÉRCIO DE PRESENTES E\nARTIGOS PARA DECORAÇÃO S/A, CNPJ: 84.453.844/0342-44 a título de\n empréstimo, o equipamento cujas características estão abaixo, para o meu uso\nexclusivo, responsabilizando-me pelo seu uso e sua guarda.";
-            doc.text(textoDeclaracao, 15, yOffset);
-            yOffset += 40;
+    doc.setFontSize(12);
+    const textoDeclaracao = "Declaro ter recebido da empresa TELLERINA COMÉRCIO DE PRESENTES E\nARTIGOS PARA DECORAÇÃO S/A, CNPJ: 84.453.844/0342-44 a título de\n empréstimo, o equipamento cujas características estão abaixo, para o meu uso\nexclusivo, responsabilizando-me pelo seu uso e sua guarda.";
+    doc.text(textoDeclaracao, 15, yOffset);
+    yOffset += 40;
 
-            // ----------------------------------------------------
-            // FUNÇÃO AUXILIAR PARA PEGAR VALOR DOS RADIOS
-            // ----------------------------------------------------
-            function getRadioValue(name) {
-                const radios = document.getElementsByName(name);
-                for (let i = 0; i < radios.length; i++) {
-                    if (radios[i].checked) {
-                        return radios[i].value;
-                    }
-                }
-                return 'Não Informado';
+    // --- FUNÇÃO AUXILIAR PARA PEGAR VALOR DOS RADIOS ---
+    function getRadioValue(name) {
+        const radios = document.getElementsByName(name);
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                return radios[i].value;
             }
-
-            // ----------------------------------------------------
-            // DADOS DO FORMULÁRIO E ADICIONAR NO PDF
-            // ----------------------------------------------------
-            doc.setFontSize(14);
-            doc.text("Dados do Colaborador", 15, yOffset);
-            doc.setFontSize(12);
-            yOffset += 10;
-            doc.text(`Nome do Colaborador: ${document.getElementById('nome-colaborador').value}`, 15, yOffset);
-            yOffset += 8;
-            doc.text(`Matrícula - RE: ${document.getElementById('matricula-colaborador').value}`, 15, yOffset);
-            yOffset += 8;
-            doc.text(`Cargo: ${document.getElementById('cargo-colaborador').value}`, 15, yOffset);
-            yOffset += 8;
-            doc.text(`Departamento: ${document.getElementById('departamento-colaborador').value}`, 15, yOffset);
-            yOffset += 8;
-            doc.text(`E-mail: ${document.getElementById('email-colaborador').value}`, 15, yOffset);
-            yOffset += 20;
-
-            doc.setFontSize(14);
-            doc.text("Informações do Equipamento", 15, yOffset);
-            doc.setFontSize(12);
-            yOffset += 10;
-            doc.text(`Equipamento - Tipo: ${document.getElementById('equipamento').value}`, 15, yOffset);
-            yOffset += 8;
-            doc.text(`Marca: ${document.getElementById('marca').value}`, 15, yOffset);
-            yOffset += 8;
-            doc.text(`Modelo: ${document.getElementById('modelo').value}`, 15, yOffset);
-            yOffset += 8;
-            doc.text(`S/N - Número de Série: ${document.getElementById('numero-serie').value}`, 15, yOffset);
-            yOffset += 8;
-            doc.text(`Patrimônio: ${document.getElementById('Patrimônio').value}`, 15, yOffset);
-            yOffset += 20;
-
-            // ----------------------------------------------------
-            // CHECKLIST GERAL
-            // ----------------------------------------------------
-            doc.setFontSize(14);
-            doc.text("Checklist Geral", 15, yOffset);
-            doc.setFontSize(12);
-            yOffset += 10;
-            doc.text(`Fotos tiradas e anexadas no termo: ${getRadioValue('fotos-anexadas')}`, 15, yOffset);
-            yOffset += 8;
-            doc.text(`Conector Fonte: ${getRadioValue('conector-fonte')}`, 15, yOffset);
-            yOffset += 8;
-            doc.text(`Carregador: ${getRadioValue('carregador')}`, 15, yOffset);
-            yOffset += 8;
-            doc.text(`Conectores: ${getRadioValue('conectores')}`, 15, yOffset);
-            yOffset += 8;
-            doc.text(`Parafusos da Carcaça: ${getRadioValue('parafusos')}`, 15, yOffset);
-            if (document.getElementById('obs-parafusos').value) {
-                yOffset += 8;
-                doc.text(`Observação Parafusos: ${document.getElementById('obs-parafusos').value}`, 25, yOffset);
-            }
-            yOffset += 8;
-            doc.text(`Estado do Teclado: ${getRadioValue('teclado-estado')}`, 15, yOffset);
-            if (document.getElementById('obs-teclado').value) {
-                yOffset += 8;
-                doc.text(`Observação Teclado: ${document.getElementById('obs-teclado').value}`, 25, yOffset);
-            }
-            yOffset += 8;
-            doc.text(`Estado do Touchpad: ${getRadioValue('touchpad-estado')}`, 15, yOffset);
-            if (document.getElementById('obs-touchpad').value) {
-                yOffset += 8;
-                doc.text(`Observação Touchpad: ${document.getElementById('obs-touchpad').value}`, 25, yOffset);
-            }
-            yOffset += 20;
-
-            // ----------------------------------------------------
-            // CÓDIGO PARA ADICIONAR IMAGENS
-            // ----------------------------------------------------
-                doc.setFontSize(14);
-                doc.text("Fotos do Equipamento", 15, yOffset);
-                yOffset += 10;
-
-                const imageFiles = [
-                    { id: 'tela', label: 'Tela' },
-                    { id: 'teclado-foto', label: 'Teclado' },
-                    { id: 'lateral-direita', label: 'Lateral Direita' },
-                    { id: 'lateral-esquerda', label: 'Lateral Esquerda' },
-                    { id: 'tampa-fechada', label: 'Tampa Fechada' }
-                ];
-
-                for (const img of imageFiles) {
-                    const input = document.getElementById(img.id);
-                    if (input.files && input.files[0]) {
-                        const file = input.files[0];
-                        const base64 = await readImage(file);
-
-                        if (yOffset + 100 > doc.internal.pageSize.height) { // Você pode ajustar este valor também se o 100 for muito alto para quebrar a página
-                            doc.addPage();
-                            yOffset = 15;
-                        }
-
-                        doc.setFontSize(12);
-                        doc.text(img.label, 15, yOffset);
-                        yOffset += 5; // Espaçamento entre o label e a imagem
-                        doc.addImage(base64, 'JPEG', 15, yOffset, 100, 70); // Imagem com 70 de altura
-                        yOffset += 75; // <-- Alterado aqui! 70 (altura da imagem) + 5 (espaço extra após a imagem)
-                    }
-                }
-
-            // ----------------------------------------------------
-            // ADICIONAR TEXTO DE DECLARAÇÃO FINAL E DATA
-            // ----------------------------------------------------
-            if (yOffset + 100 > doc.internal.pageSize.height) {
-                doc.addPage();
-                yOffset = 15;
-            }
-
-            const textoFinal = "Declaro, ainda que estar ciente de que:\n" +
-                "(a) o equipamento deverá ser usado exclusivamente para o cumprimento de minhas atividades profissionais;\n" +
-                "(b) deverei utilizar o equipamento com prudência e cautela, zelando por sua conservação e manutenção, obrigando-me a devolvê-lo sempre que solicitado pela TELLERINA COMÉRCIO DE PRESENTES E ARTIGOS PARA DECORAÇÃO S/A, em perfeito estado de funcionamento e conservação, salvo os desgastes do uso normal;\n" +
-                "(c) Em caso de danos recorrentes de mau uso causados ao equipamento, deverei comunicar imediatamente ao time da TI e a área em que atuo será responsável por arcar com os custos de reposição de um novo equipamento\n" +
-                "(d) É de sua responsabilidade realizar a higienização utilizando álcool isopropílico. Não usar álcool em gel ou qualquer outro tipo de abrasivo que danifique o equipamento.\n" +
-                "(e) Em caso de furto ou roubo do equipamento, deverei providenciar o BO com as informações do modelo e número de série do equipamento e enviar para o time da TI. Caso contrário, estou ciente que será tratado o caso como perda e a área em que atuo será responsável por arcar com os custos de reposição de um novo equipamento\n" +
-                "(f) No caso de eventual viagem ao exterior, OBRIGO-ME a registrar o equipamento, como bagagem junto à Polícia Federal, ficando ciente de que, na hipótese de o equipamento ser apreendido, serei responsável pelas despesas de multas impostas pelo fisco\n" +
-                "(g) Em caso de desligamento, deverei devolver o equipamento nas mesmas condições em que me foi entregue, exceto pelo desgasto normal de uso para TELLERINA COMÉRCIO DE PRESENTES E ARTIGOS PARA DECORAÇÃO S/A,.\n" +
-                "_________________________________________________________________\nAss Colaborador : _______________________________________________________\nAss Responsavel : ________________________________________________________";
-
-            // Adiciona o texto de declaração final
-            doc.text(textoFinal, 15, yOffset, { maxWidth: 180 });
-            yOffset += doc.getTextDimensions(textoFinal, { maxWidth: 180 }).h + 20;
-
-            // Adiciona a data atual
-            const hoje = new Date();
-            const dataFormatada = hoje.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
-            doc.text(`São Paulo, ${dataFormatada}`, 15, yOffset);
-            yOffset += 20;
-
-            // Adiciona os campos de assinatura
-            doc.text(`De acordo,`, 15, yOffset);
-            doc.line(80, yOffset + 5, 200, yOffset + 5); // Linha para a assinatura
-            doc.text(`Assinatura:`, 15, yOffset + 15);
-            doc.line(80, yOffset + 20, 200, yOffset + 20); // Linha para a assinatura
-
-            // Salva o PDF após todas as operações assíncronas
-            doc.save('termo-responsabilidade.pdf');
         }
+        return 'Não Informado';
+    }
+
+    // --- TABELA DE DADOS DO COLABORADOR ---
+    const dadosColaborador = [
+        ['Nome do Colaborador', document.getElementById('nome-colaborador').value || ''],
+        ['Matrícula - RE', document.getElementById('matricula-colaborador').value || ''],
+        ['Cargo', document.getElementById('cargo-colaborador').value || ''],
+        ['Departamento', document.getElementById('departamento-colaborador').value || ''],
+        ['E-mail', document.getElementById('email-colaborador').value || '']
+    ];
+
+    doc.setFontSize(14);
+    yOffset += 3; // Espaço antes da tabela
+
+    doc.autoTable({
+        startY: yOffset,
+        head: [['', 'Dados do Colaborador']],
+        body: dadosColaborador,
+        theme: 'striped', // Tema visual da tabela
+        headStyles: { fillColor: [236, 165, 127], textColor: [74, 74, 74] }, // Cor de fundo e texto do cabeçalho
+        bodyStyles: { textColor: [74, 74, 74] },
+        columnStyles: {
+            0: { fontStyle: 'bold', cellWidth: 50 }, // Estilo da primeira coluna (Campo)
+            1: { cellWidth: 'auto' } // Estilo da segunda coluna (Informação)
+        }
+    });
+
+    yOffset = doc.autoTable.previous.finalY + 20; // Atualiza yOffset após a tabela
+
+    // --- TABELA DE INFORMAÇÕES DO EQUIPAMENTO ---
+    const dadosEquipamento = [
+        ['Equipamento - Tipo', document.getElementById('equipamento').value || ''],
+        ['Marca', document.getElementById('marca').value || ''],
+        ['Modelo', document.getElementById('modelo').value || ''],
+        ['S/N - Número de Série', document.getElementById('numero-serie').value || ''],
+        ['Patrimônio', document.getElementById('Patrimônio').value || '']
+    ];
+
+    doc.setFontSize(14);
+    yOffset += 3;
+
+    doc.autoTable({
+        startY: yOffset,
+        head: [['', 'Dados do Equipamento']],
+        body: dadosEquipamento,
+        theme: 'striped',
+        headStyles: { fillColor: [236, 165, 127], textColor: [74, 74, 74] },
+        bodyStyles: { textColor: [74, 74, 74] },
+        columnStyles: {
+            0: { fontStyle: 'bold', cellWidth: 50 },
+            1: { cellWidth: 'auto' }
+        }
+    });
+
+    yOffset = doc.autoTable.previous.finalY + 20;
+
+    // --- TABELA DE CHECKLIST GERAL ---
+    const dadosChecklist = [
+        ['Fotos tiradas e anexadas no termo', getRadioValue('fotos-anexadas')],
+        ['Conector Fonte', getRadioValue('conector-fonte')],
+        ['Carregador', getRadioValue('carregador')],
+        ['Conectores', getRadioValue('conectores')],
+        ['Parafusos da Carcaça', getRadioValue('parafusos')],
+        ['Observação Parafusos', document.getElementById('obs-parafusos').value || 'N/A'],
+        ['Estado do Teclado', getRadioValue('teclado-estado')],
+        ['Observação Teclado', document.getElementById('obs-teclado').value || 'N/A'],
+        ['Estado do Touchpad', getRadioValue('touchpad-estado')],
+        ['Numero do Chamado BPM', document.getElementById('obs-touchpad').value || 'N/A']
+    ];
+
+    doc.setFontSize(14);
+    doc.text("Checklist Geral", 15, yOffset); //ESPAÇO DA TABELA - EDITEI NA PAGE
+    yOffset += 10;
+
+    doc.autoTable({
+        startY: yOffset,
+        head: [['Item', 'Status/Observação']],
+        body: dadosChecklist,
+        theme: 'striped',
+        headStyles: { fillColor: [236, 165, 127], textColor: [74, 74, 74] },
+        bodyStyles: { textColor: [74, 74, 74] },
+        columnStyles: {
+            0: { fontStyle: 'bold', cellWidth: 60 },
+            1: { cellWidth: 'auto' }
+        }
+    });
+
+    yOffset = doc.autoTable.previous.finalY + 20;
+
+    // --- CÓDIGO PARA ADICIONAR IMAGENS UMA AO LADO DA OUTRA ---
+    doc.setFontSize(14);
+    doc.text("Fotos do Equipamento", 15, yOffset);
+    yOffset += 10;
+
+    const imageFiles = [
+        { id: 'tela', label: 'Tela' },
+        { id: 'teclado-foto', label: 'Teclado' },
+        { id: 'lateral-direita', label: 'Lateral Direita' },
+        { id: 'lateral-esquerda', label: 'Lateral Esquerda' },
+        { id: 'tampa-fechada', label: 'Tampa Fechada' }
+    ];
+
+    let xOffset = 15; // Posição horizontal inicial
+    const imageWidth = 80;
+    const imageHeight = 60;
+    const imageSpacing = 10; // Espaçamento entre as imagens
+
+    for (const img of imageFiles) {
+        const input = document.getElementById(img.id);
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            const base64 = await readImage(file);
+
+            // Verifica se a próxima imagem ultrapassa a largura da página
+            if (xOffset + imageWidth > doc.internal.pageSize.width - 15) {
+                // Se sim, avança para a próxima linha
+                xOffset = 15;
+                yOffset += imageHeight + imageSpacing;
+            }
+
+            // Adiciona a imagem no PDF
+            doc.addImage(base64, 'JPEG', xOffset, yOffset, imageWidth, imageHeight);
+            
+            // Adiciona o label abaixo da imagem
+            doc.setFontSize(10);
+            doc.text(img.label, xOffset, yOffset + imageHeight + 5);
+
+            // Atualiza a posição X para a próxima imagem
+            xOffset += imageWidth + imageSpacing;
+        }
+    }
+    yOffset += imageHeight + 20; // Garante espaço suficiente para a próxima seção
+
+    // --- ADICIONAR TEXTO DE DECLARAÇÃO FINAL E DATA ---
+    if (yOffset + 100 > doc.internal.pageSize.height) {
+        doc.addPage();
+        yOffset = 15;
+    }
+
+    const textoFinal = "Declaro, ainda que estar ciente de que:\n" +
+        "(a) o equipamento deverá ser usado exclusivamente para o cumprimento de minhas atividades profissionais;\n" +
+        "(b) deverei utilizar o equipamento com prudência e cautela, zelando por sua conservação e manutenção, obrigando-me a devolvê-lo sempre que solicitado pela TELLERINA COMÉRCIO DE PRESENTES E ARTIGOS PARA DECORAÇÃO S/A, em perfeito estado de funcionamento e conservação, salvo os desgastes do uso normal;\n" +
+        "(c) Em caso de danos recorrentes de mau uso causados ao equipamento, deverei comunicar imediatamente ao time da TI e a área em que atuo será responsável por arcar com os custos de reposição de um novo equipamento\n" +
+        "(d) É de sua responsabilidade realizar a higienização utilizando álcool isopropílico. Não usar álcool em gel ou qualquer outro tipo de abrasivo que danifique o equipamento.\n" +
+        "(e) Em caso de furto ou roubo do equipamento, deverei providenciar o BO com as informações do modelo e número de série do equipamento e enviar para o time da TI. Caso contrário, estou ciente que será tratado o caso como perda e a área em que atuo será responsável por arcar com os custos de reposição de um novo equipamento\n" +
+        "(f) No caso de eventual viagem ao exterior, OBRIGO-ME a registrar o equipamento, como bagagem junto à Polícia Federal, ficando ciente de que, na hipótese de o equipamento ser apreendido, serei responsável pelas despesas de multas impostas pelo fisco\n" +
+        "(g) Em caso de desligamento, deverei devolver o equipamento nas mesmas condições em que me foi entregue, exceto pelo desgasto normal de uso para TELLERINA COMÉRCIO DE PRESENTES E ARTIGOS PARA DECORAÇÃO S/A,.\n" +
+        "_________________________________________________________________\nAss Colaborador : _______________________________________________________\nAss Responsavel : ________________________________________________________";
+
+    doc.text(textoFinal, 15, yOffset, { maxWidth: 180 });
+    yOffset += doc.getTextDimensions(textoFinal, { maxWidth: 180 }).h + 20;
+
+    // Adiciona a data atual
+    const hoje = new Date();
+    const dataFormatada = hoje.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+    doc.text(`São Paulo, ${dataFormatada}`, 15, yOffset);
+    yOffset += 20;
+
+    // Adiciona os campos de assinatura
+    doc.text(`De acordo,`, 15, yOffset);
+    doc.line(80, yOffset + 5, 200, yOffset + 5); // Linha para a assinatura
+    doc.text(`Assinatura:`, 15, yOffset + 15);
+    doc.line(80, yOffset + 20, 200, yOffset + 20); // Linha para a assinatura
+
+    // Salva o PDF após todas as operações assíncronas
+    doc.save('termo-responsabilidade.pdf');
+}
     </script>
 </body>
 </html>

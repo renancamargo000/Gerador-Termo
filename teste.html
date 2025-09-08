@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vivara - Termo de Responsabilidade</title>
     <link rel="shortcut icon" href="imagens/tellerina-icon.png" type="image/x-icon">
-
-    <style>
+    <link rel="stylesheet" href="style.css">
+     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cossette+Titre:wght@400;700&family=Roboto:ital,wdth@0,75..100;1,75..100&display=swap');
 
         /* Estilos globais para o corpo e o cabeçalho */
         body {
-            background-color: #ECA57F;
+            background-color: #ffffff;
             font-family: Arial, Helvetica, sans-serif;
             margin: 0;
             padding: 20px;
@@ -20,7 +20,8 @@
         header {
             text-align: center;
             font-family: "Roboto", sans-serif;
-            text-shadow: -1px 1px 20px black;
+            text-shadow: -9px 7px 20px #635a54;
+            display: none;
         }
 
         h1 {
@@ -32,27 +33,59 @@
             font-size: 20px;
             font-family: "Roboto", sans-serif;
         }
-
-        /* Estilos para o formulário */
-        main {
-            max-width: 1000px;
-            margin: 0 auto;
+        
+        /* Estilo da barra lateral que foi adicionada */
+        aside {
+            width: 300px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            background-color: #ECA57F;
+            padding: 20px;
+            box-sizing: border-box;
+            border-right: 2px solid #D36D48;
+            z-index: 10;
         }
 
+        aside h1 {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        aside p {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #4A4A4A;
+        }
+
+        /* Ajuste do corpo principal para não ficar por baixo da barra lateral */
+        main {
+            margin-left: 320px;
+            max-width: 1000px;
+            padding: 20px;
+        }
+
+
+        /* Estilos para o formulário */
         fieldset {
             width: 100%;
             max-width: 1000px;
             margin: 0 auto 40px auto;
             border-radius: 10px;
-            border: 1px solid #e2976e;
+            box-shadow: -7px 9px 20px black;
+            background-color: #ECA57F;
             padding: 20px;
             box-sizing: border-box;
+            border: 1px solid #e2976e;
         }
 
         legend {
             text-align: center;
             font-size: 20px;
             padding: 0 10px;
+            font-weight: bold;
         }
 
         label {
@@ -66,7 +99,8 @@
         input[type="text"],
         input[type="email"],
         textarea,
-        select {
+        select,
+        input[type="file"] {
             display: block;
             margin-bottom: 15px;
             width: 100%;
@@ -79,11 +113,11 @@
         /* Estilos específicos para o checklist */
         .checklist {
             border-style: solid;
-            border-color: #e2976e;
+            border-color: #4A4A4A;
             border-width: 1px;
             padding: 10px;
             margin-bottom: 15px;
-            border-radius: 5px;
+            border-radius: 10px;
         }
 
         .checklist label {
@@ -131,19 +165,27 @@
             box-sizing: border-box;
         }
     </style>
-</head>
 
 <body>
+
+    <aside style="width: 340px; position: fixed;">
+        <div style="width: 300px;">
+        <h1><img src="imagens/vivara-logo.png" alt="" width="200px" height="50px"></h1>
+        <p>Termo de Responsabilidade</p>
+        <p>Certifique-se das Informações</p>
+        </div>
+    </aside>
+
     <header>
         <h1>Termo de Responsabilidade WEB</h1>
-        <img src="imagens/vivara-logo.png" alt="" width="200px" height="50px">
     </header>
 
     <main>
-        <h5>Preencha todas as informações e imprima em PDF para gerar o Termo</h5>
-        <label for="responsavel">Termo Gerado por:
-            <input type="text" id="responsavel">
+        <h5>Preencha todos as informações e imprima em PDF para gerar o Termo</h5>
+        <label for="nome-responsavel" style="text-align: center;">Responsavel (TI): 
+            <input type="text" id="responsavel" style="display: block; margin: 0 auto;" required>
         </label>
+
 
         <fieldset>
             <legend>Dados do Colaborador</legend>
@@ -194,25 +236,25 @@
                 <label>Fotos tiradas e anexadas no termo?</label><br>
                 <input type="radio" name="fotos-anexadas" value="Sim"> <label>Sim</label>
                 <input type="radio" name="fotos-anexadas" value="Não"> <label>Não</label>
-            </div>
+            </div> <br>
 
             <div class="checklist">
                 <label>Conector Fonte</label> <br>
                 <input type="radio" name="conector-fonte" value="Em Condições"> <label>Em Condições</label>
                 <input type="radio" name="conector-fonte" value="Danificado"> <label>Danificado</label>
-            </div>
+            </div> <br>
 
             <div class="checklist">
                 <label>Carregador - Cabo de Energia tipo C</label> <br>
                 <input type="radio" name="carregador" value="Em Condições"> <label>Em Condições</label>
                 <input type="radio" name="carregador" value="Danificado"> <label>Danificado</label>
-            </div>
+            </div> <br>
 
             <div class="checklist">
                 <label>Conectores USB, HDMI, ETHERNET, ETC.</label> <br>
                 <input type="radio" name="conectores" value="Em Condições"> <label>Em Condições</label>
                 <input type="radio" name="conectores" value="Danificado"> <label>Danificado</label>
-            </div>
+            </div> <br>
 
             <div class="checklist">
                 <label>Parafusos da Carcaça</label> <br>
@@ -222,18 +264,18 @@
                 <details>
                     <summary>Faltando parafusos? Informe aqui</summary>
                     <textarea id="obs-parafusos"></textarea>
-                </details>
-            </div>
+                </details> 
+            </div> <br>
 
             <div class="checklist">
                 <label>Estado do Teclado</label> <br>
                 <input type="radio" name="teclado-estado" value="Em Condições"> <label>Em Condições</label>
                 <input type="radio" name="teclado-estado" value="Danificado"> <label>Danificado</label>
-                <textarea id="obs-teclado" placeholder="Informe Observações"></textarea>
+                <textarea id="obs-teclado" placeholder="Informe Observações"></textarea> 
             </div>
 
             <div class="checklist">
-                <label>Estado do Touchpad</label>
+                <label>Estado do Touchpad</label> <br>
                 <input type="radio" name="touchpad-estado" value="Em Condições"> <label>Em Condições</label>
                 <input type="radio" name="touchpad-estado" value="Danificado"> <label>Danificado</label>
                 <textarea id="obs-touchpad" placeholder="Informe Observações"></textarea>
@@ -241,7 +283,7 @@
         </fieldset>
 
         <fieldset>
-            <legend>Fotos do Equipamento Entregue</legend>
+            <legend>Fotos do Equipamento</legend>
             <label for="tela">Tela</label>
             <input type="file" id="tela" accept="image/jpeg, image/png">
 
@@ -261,6 +303,10 @@
         <button onclick="gerarPDF()">Baixar Termo em PDF</button>
 
     </main>
+
+    <footer>
+        Desenvolvido por: Renan Marques
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -282,8 +328,8 @@
             // ----------------------------------------------------
             // CÓDIGO DO CABEÇALHO
             // ----------------------------------------------------
-            const logoVivara = 'imagens/tellerina-icon.png';
-            doc.addImage(logoVivara, 'PNG', 15, 10, 50, 15);
+            const logoTellerina = 'imagens/tellerina-icon.png'; 
+            doc.addImage(logoTellerina, 'PNG', 15, 10, 50, 15);
             yOffset = 40;
 
             doc.setFontSize(14);
@@ -291,18 +337,9 @@
             yOffset += 20;
 
             doc.setFontSize(12);
-            const textoDeclaracao = "Declaro ter recebido da empresa TELLERINA COMÉRCIO DE PRESENTES E\nARTIGOS PARA DECORAÇÃO S/A, CNPJ: 84.453.844/0342-44 a título de\n" +
-                "empréstimo, o equipamento cujas características estão abaixo, para o meu uso\nexclusivo, responsabilizando-me pelo seu uso e sua guarda.";
+            const textoDeclaracao = "Declaro ter recebido da empresa TELLERINA COMÉRCIO DE PRESENTES E\nARTIGOS PARA DECORAÇÃO S/A, CNPJ: 84.453.844/0342-44 a título de\n empréstimo, o equipamento cujas características estão abaixo, para o meu uso\nexclusivo, responsabilizando-me pelo seu uso e sua guarda.";
             doc.text(textoDeclaracao, 15, yOffset);
-            yOffset += 20;
-
-            // ----------------------------------------------------
-            // NOVO CAMPO: TERMO GERADO POR
-            // ----------------------------------------------------
-            const termoGeradoPor = document.getElementById('responsavel').value;
-            doc.text(`Termo Gerado por: ${termoGeradoPor}`, 15, yOffset);
-            yOffset += 20;
-
+            yOffset += 40;
 
             // ----------------------------------------------------
             // FUNÇÃO AUXILIAR PARA PEGAR VALOR DOS RADIOS
@@ -387,36 +424,62 @@
             // ----------------------------------------------------
             // CÓDIGO PARA ADICIONAR IMAGENS
             // ----------------------------------------------------
-            doc.setFontSize(14);
-            doc.text("Fotos do Equipamento", 15, yOffset);
-            yOffset += 10;
+                doc.setFontSize(14);
+                    doc.text("Fotos do Equipamento", 15, yOffset);
+                    yOffset += 10;
 
-            const imageFiles = [
-                { id: 'tela', label: 'Tela' },
-                { id: 'teclado-foto', label: 'Teclado' },
-                { id: 'lateral-direita', label: 'Lateral Direita' },
-                { id: 'lateral-esquerda', label: 'Lateral Esquerda' },
-                { id: 'tampa-fechada', label: 'Tampa Fechada' }
-            ];
+                    const imageFiles = [
+                        { id: 'tela', label: 'Tela' },
+                        { id: 'teclado-foto', label: 'Teclado' },
+                        { id: 'lateral-direita', label: 'Lateral Direita' },
+                        { id: 'lateral-esquerda', label: 'Lateral Esquerda' },
+                        { id: 'tampa-fechada', label: 'Tampa Fechada' }
+                    ];
 
-            for (const img of imageFiles) {
-                const input = document.getElementById(img.id);
-                if (input.files && input.files[0]) {
-                    const file = input.files[0];
-                    const base64 = await readImage(file);
+                    const imagesPerRow = 2; // Quantas imagens você quer por linha
+                    const imageWidth = 85;  // Largura de cada imagem (ajuste conforme necessário)
+                    const imageHeight = 60; // Altura de cada imagem (ajuste conforme necessário)
+                    const horizontalSpacing = 10; // Espaço entre imagens na mesma linha
+                    const verticalSpacing = 30; // Espaço entre as linhas de imagens (inclui espaço para label e a própria imagem)
 
-                    if (yOffset + 130 > doc.internal.pageSize.height) {
-                        doc.addPage();
-                        yOffset = 15;
+                    let currentX = 15;
+                    let currentY = yOffset;
+                    let rowCount = 0;
+
+                    for (const img of imageFiles) {
+                        const input = document.getElementById(img.id);
+                        if (input.files && input.files[0]) {
+                            const file = input.files[0];
+                            const base64 = await readImage(file);
+
+                            // Verifica se precisa adicionar uma nova página
+                            if (currentY + imageHeight + 15 > doc.internal.pageSize.height) { // +15 para dar um espaço extra antes de quebrar a página
+                                doc.addPage();
+                                currentY = 15; // Reseta a posição Y para o topo da nova página
+                                currentX = 15; // Reseta a posição X também
+                                rowCount = 0; // Reseta a contagem de linhas
+                            }
+
+                            doc.setFontSize(12);
+                            // Posiciona o label acima da imagem
+                            doc.text(img.label, currentX, currentY);
+                            currentY += 5; // Pequeno espaço entre label e imagem
+
+                            // Adiciona a imagem
+                            doc.addImage(base64, 'JPEG', currentX, currentY, imageWidth, imageHeight);
+
+                            // Atualiza a posição para a próxima imagem na linha ou para a próxima linha
+                            currentX += imageWidth + horizontalSpacing;
+                            rowCount++;
+
+                            // Se atingiu o número de imagens por linha, ou é a última imagem
+                            if (rowCount === imagesPerRow || img === imageFiles[imageFiles.length - 1]) {
+                                currentY += imageHeight + verticalSpacing; // Move para a próxima linha
+                                currentX = 15; // Reseta a posição X para o início da linha
+                                rowCount = 0; // Reseta o contador de imagens na linha
+                            }
+                        }
                     }
-
-                    doc.setFontSize(12);
-                    doc.text(img.label, 15, yOffset);
-                    yOffset += 5;
-                    doc.addImage(base64, 'JPEG', 15, yOffset, 180, 120);
-                    yOffset += 130;
-                }
-            }
 
             // ----------------------------------------------------
             // ADICIONAR TEXTO DE DECLARAÇÃO FINAL E DATA
@@ -427,23 +490,18 @@
             }
 
             const textoFinal = "Declaro, ainda que estar ciente de que:\n" +
-                "(a) o equipamento deverá ser usado exclusivamente para\n o cumprimento de minhas atividades profissionais;\n" +
-                "(b) deverei utilizar o equipamento com prudência e\n cautela, zelando por sua conservação e manutenção, obrigando-me a devolvê-lo\n" +
-                "sempre que solicitado pela TELLERINA COMÉRCIO DE PRESENTES E ARTIGOS PARA\nDECORAÇÃO S/A, em perfeito estado de funcionamento e conservação, salvo os\ndesgastes do uso normal;\n" +
-                "(c) Em caso de danos recorrentes de mau uso causados ao equipamento, deverei comunicar\n imediatamente ao time da TI e a área em que atuo será responsável por arcar com\n" +
-                "os custos de reposição de um novo equipamento\n(d) É de sua responsabilidade realizar a higienização\n" +
-                "utilizando álcool isopropílico. Não usar álcool em gel ou qualquer outro tipo\nde abrasivo que danifique o equipamento.\n(e) Em caso de furto ou roubo do equipamento, deverei\n" +
-                "providenciar o BO com as informações do modelo e número de série do equipamento\n e enviar para o time da TI. Caso contrário, estou ciente que será tratado o\n" +
-                "caso como perda e a área em que atuo será responsável por arcar com os custos\n de reposição de um novo equipamento\n" +
-                "(f) No caso de eventual viagem ao exterior, OBRIGO-ME\n a registrar o equipamento, como bagagem junto à Polícia Federal, ficando ciente\n" +
-                "de que, na hipótese de o equipamento ser apreendido, serei responsável pelas\n despesas de multas impostas pelo fisco\n" +
-                "(g) Em caso de desligamento, deverei devolver o\n equipamento nas mesmas condições em que me foi entregue, exceto pelo desgasto\n" +
-                "normal de uso para TELLERINA COMÉRCIO DE PRESENTES E ARTIGOS PARA DECORAÇÃO\nS/A,.";
-                
+                "(a) o equipamento deverá ser usado exclusivamente para o cumprimento de minhas atividades profissionais;\n" +
+                "(b) deverei utilizar o equipamento com prudência e cautela, zelando por sua conservação e manutenção, obrigando-me a devolvê-lo sempre que solicitado pela TELLERINA COMÉRCIO DE PRESENTES E ARTIGOS PARA DECORAÇÃO S/A, em perfeito estado de funcionamento e conservação, salvo os desgastes do uso normal;\n" +
+                "(c) Em caso de danos recorrentes de mau uso causados ao equipamento, deverei comunicar imediatamente ao time da TI e a área em que atuo será responsável por arcar com os custos de reposição de um novo equipamento\n" +
+                "(d) É de sua responsabilidade realizar a higienização utilizando álcool isopropílico. Não usar álcool em gel ou qualquer outro tipo de abrasivo que danifique o equipamento.\n" +
+                "(e) Em caso de furto ou roubo do equipamento, deverei providenciar o BO com as informações do modelo e número de série do equipamento e enviar para o time da TI. Caso contrário, estou ciente que será tratado o caso como perda e a área em que atuo será responsável por arcar com os custos de reposição de um novo equipamento\n" +
+                "(f) No caso de eventual viagem ao exterior, OBRIGO-ME a registrar o equipamento, como bagagem junto à Polícia Federal, ficando ciente de que, na hipótese de o equipamento ser apreendido, serei responsável pelas despesas de multas impostas pelo fisco\n" +
+                "(g) Em caso de desligamento, deverei devolver o equipamento nas mesmas condições em que me foi entregue, exceto pelo desgasto normal de uso para TELLERINA COMÉRCIO DE PRESENTES E ARTIGOS PARA DECORAÇÃO S/A,.\n" +
+                "_________________________________________________________________\nAss Colaborador : _______________________________________________________\nAss Responsavel : ________________________________________________________";
 
             // Adiciona o texto de declaração final
-            doc.text(textoFinal, 15, yOffset, { maxWidth: 198 });
-            yOffset += doc.getTextDimensions(textoFinal, { maxWidth: 198 }).h + 20;
+            doc.text(textoFinal, 15, yOffset, { maxWidth: 180 });
+            yOffset += doc.getTextDimensions(textoFinal, { maxWidth: 180 }).h + 20;
 
             // Adiciona a data atual
             const hoje = new Date();
@@ -453,9 +511,9 @@
 
             // Adiciona os campos de assinatura
             doc.text(`De acordo,`, 15, yOffset);
-            doc.line(80, yOffset + 5, 200, yOffset + 5);
+            doc.line(80, yOffset + 5, 200, yOffset + 5); // Linha para a assinatura
             doc.text(`Assinatura:`, 15, yOffset + 15);
-            doc.line(80, yOffset + 20, 200, yOffset + 20);
+            doc.line(80, yOffset + 20, 200, yOffset + 20); // Linha para a assinatura
 
             // Salva o PDF após todas as operações assíncronas
             doc.save('termo-responsabilidade.pdf');
