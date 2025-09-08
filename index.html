@@ -442,7 +442,7 @@
                     const file = input.files[0];
                     const base64 = await readImage(file);
 
-                    if (yOffset + 130 > doc.internal.pageSize.height) {
+                    if (yOffset + 100 > doc.internal.pageSize.height) {
                         doc.addPage();
                         yOffset = 15;
                     }
