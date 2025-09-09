@@ -66,6 +66,7 @@
             margin-left: 320px;
             max-width: 1000px;
             padding: 20px;
+            margin: 0 auto;
         }
 
 
@@ -114,7 +115,13 @@
         textarea#obs-touchpad{
             font-size: 20px;
             font-weight: bold;
+            text-align: center;
 
+        }
+        textarea#obs-touchpad:hover{
+            background-color: gray;
+            color: white;
+            cursor: pointer;
         }
 
         /* Estilos específicos para o checklist */
@@ -180,6 +187,7 @@
         <h1><img src="imagens/vivara-logo.png" alt="" width="200px" height="50px"></h1>
         <p>Termo de Responsabilidade</p>
         <p>Certifique-se das Informações</p>
+        <textarea id="obs-touchpad" required placeholder="Numero do Chamado"></textarea>
         </div>
     </aside>
 
@@ -285,7 +293,6 @@
                 <input type="radio" name="touchpad-estado" value="Em Condições"> <label>Em Condições</label>
                 <input type="radio" name="touchpad-estado" value="Danificado"> <label>Danificado</label>
             </div>
-            <textarea id="obs-touchpad" required placeholder="Informe o Numero do Chamado"></textarea>
         </fieldset>
 
         <fieldset>
@@ -304,6 +311,10 @@
 
             <label for="tampa-fechada">Tampa Fechada</label>
             <input type="file" id="tampa-fechada" accept="image/jpeg, image/png">
+            
+
+            <label for="tampa-traseira">Tampa Traseira</label>
+            <input type="file" id="tampa-traseira" accept="image/jpeg, image/png">  
         </fieldset>
 
         <button onclick="gerarPDF()">Baixar Termo em PDF</button>
@@ -340,13 +351,14 @@
     yOffset = 40;
 
     doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold')
     doc.text("TERMO DE RESPONSABILIDADE DE EQUIPAMENTOS DE TI", 105, yOffset, null, null, "center");
     yOffset += 20;
 
     doc.setFontSize(12);
     const textoDeclaracao = "Declaro ter recebido da empresa TELLERINA COMÉRCIO DE PRESENTES E\nARTIGOS PARA DECORAÇÃO S/A, CNPJ: 84.453.844/0342-44 a título de\n empréstimo, o equipamento cujas características estão abaixo, para o meu uso\nexclusivo, responsabilizando-me pelo seu uso e sua guarda.";
     doc.text(textoDeclaracao, 15, yOffset);
-    yOffset += 40;
+    yOffset += 20;
 
     // --- FUNÇÃO AUXILIAR PARA PEGAR VALOR DOS RADIOS ---
     function getRadioValue(name) {
@@ -369,7 +381,7 @@
     ];
 
     doc.setFontSize(14);
-    yOffset += 3; // Espaço antes da tabela
+    yOffset += 2; // Espaço antes da tabela
 
     doc.autoTable({
         startY: yOffset,
@@ -456,13 +468,14 @@
         { id: 'teclado-foto', label: 'Teclado' },
         { id: 'lateral-direita', label: 'Lateral Direita' },
         { id: 'lateral-esquerda', label: 'Lateral Esquerda' },
-        { id: 'tampa-fechada', label: 'Tampa Fechada' }
+        { id: 'tampa-fechada', label: 'Tampa Fechada' },
+        { id: 'tampa-traseira', label: 'Tampa Traseira'},
     ];
 
     let xOffset = 15; // Posição horizontal inicial
     const imageWidth = 80;
     const imageHeight = 60;
-    const imageSpacing = 10; // Espaçamento entre as imagens
+    const imageSpacing = 11; // Espaçamento entre as imagens
 
     for (const img of imageFiles) {
         const input = document.getElementById(img.id);
@@ -504,7 +517,7 @@
         "(e) Em caso de furto ou roubo do equipamento, deverei providenciar o BO com as informações do modelo e número de série do equipamento e enviar para o time da TI. Caso contrário, estou ciente que será tratado o caso como perda e a área em que atuo será responsável por arcar com os custos de reposição de um novo equipamento\n" +
         "(f) No caso de eventual viagem ao exterior, OBRIGO-ME a registrar o equipamento, como bagagem junto à Polícia Federal, ficando ciente de que, na hipótese de o equipamento ser apreendido, serei responsável pelas despesas de multas impostas pelo fisco\n" +
         "(g) Em caso de desligamento, deverei devolver o equipamento nas mesmas condições em que me foi entregue, exceto pelo desgasto normal de uso para TELLERINA COMÉRCIO DE PRESENTES E ARTIGOS PARA DECORAÇÃO S/A,.\n" +
-        "_________________________________________________________________\nAss Colaborador : _______________________________________________________\nAss Responsavel : ________________________________________________________";
+        "_________________________________________________________________\nAnalista Responsavel : ________________________________________________________";
 
     doc.text(textoFinal, 15, yOffset, { maxWidth: 180 });
     yOffset += doc.getTextDimensions(textoFinal, { maxWidth: 180 }).h + 20;
