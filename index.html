@@ -10,6 +10,17 @@
      <style>
         @import url('https://fonts.googleapis.com/css2?family=Cossette+Titre:wght@400;700&family=Roboto:ital,wdth@0,75..100;1,75..100&display=swap');
 
+        @media (max-width: 1508px){
+            aside{
+                display: none;
+            }
+            
+           textarea#obs-touchpad{
+                display: block;
+                color: black;
+            }
+        }
+
         /* Estilos globais para o corpo e o cabeçalho */
         body {
             background-color: #ffffff;
@@ -114,14 +125,25 @@
 
         textarea#obs-touchpad{
             font-size: 20px;
+            text-decoration: dashed;
+            font-family: Arial, Helvetica, sans-serif;
             font-weight: bold;
             text-align: center;
+            padding: 20px;
+            font
 
         }
+        
+
         textarea#obs-touchpad:hover{
-            background-color: gray;
+            background-color: rgba(128, 128, 128, 0.336);
             color: white;
             cursor: pointer;
+            box-shadow: 0px 2px 2px rgba(24, 24, 24, 0.377);
+            transform: translateY(5px);
+            transition: 2s;
+            transition-timing-function: 4s;
+            padding: 15px 20px;
         }
 
         /* Estilos específicos para o checklist */
@@ -151,13 +173,14 @@
         button {
             display: block;
             margin: 20px auto;
-            padding: 10px 20px;
+            padding: 15px 20px;
+            width: 400px;
             font-size: 18px;
             cursor: pointer;
             background-color: #D36D48;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             transition: background-color 0.3s ease;
         }
 
@@ -187,7 +210,6 @@
         <h1><img src="imagens/vivara-logo.png" alt="" width="200px" height="50px"></h1>
         <p>Termo de Responsabilidade</p>
         <p>Certifique-se das Informações</p>
-        <textarea id="obs-touchpad" required placeholder="Numero do Chamado"></textarea>
         </div>
     </aside>
 
@@ -196,16 +218,21 @@
     </header>
 
     <main>
-        <h5>Preencha todos as informações e imprima em PDF para gerar o Termo</h5>
+        <h5><textarea id="obs-touchpad" required placeholder="Numero do Chamado"></textarea></h5>
         <label for="nome-responsavel" style="text-align: center;">Responsavel (TI): 
-            <input type="text" id="responsavel" style="display: block; margin: 0 auto;" required>
+            <datalist id="nome-responsavel">
+                <option value="Leonardo Siqueira de Melo">Analista TI</option>
+                <option value="Renan Marques Camargo">Analista TI</option>
+                <option value="Beatriz Vitoria Rocha de Franca">Analista GDA</option>
+            </datalist>
+            <input type="text" id="responsavel" list="nome-responsavel" style="display: block; margin: 0 auto;" required>
         </label>
 
         <fieldset>
             <legend>Dados do Colaborador</legend>
             <div class="nome-matricula">
                 <label for="nome-colaborador">Nome do Colaborador</label>
-                <input type="text" id="nome-colaborador">
+                <input type="text" id="nome-colaborador" autocomplete="off">
 
                 <label for="matricula-colaborador">Matricula - RE</label>
                 <input type="text" id="matricula-colaborador">
@@ -248,31 +275,31 @@
 
             <div class="checklist">
                 <label>Fotos tiradas e anexadas no termo?</label><br>
-                <input type="radio" name="fotos-anexadas" value="Sim"> <label>Sim</label>
+                <input type="radio" name="fotos-anexadas" value="Sim" value="a" checked> <label>Sim</label>
                 <input type="radio" name="fotos-anexadas" value="Não"> <label>Não</label>
             </div> <br>
 
             <div class="checklist">
                 <label>Conector Fonte</label> <br>
-                <input type="radio" name="conector-fonte" value="Em Condições"> <label>Em Condições</label>
+                <input type="radio" name="conector-fonte" value="Em Condições" value="a" checked> <label>Em Condições</label>
                 <input type="radio" name="conector-fonte" value="Danificado"> <label>Danificado</label>
             </div> <br>
 
             <div class="checklist">
                 <label>Carregador - Cabo de Energia tipo C</label> <br>
-                <input type="radio" name="carregador" value="Em Condições"> <label>Em Condições</label>
+                <input type="radio" name="carregador" value="Em Condições" value="a" checked> <label>Em Condições</label>
                 <input type="radio" name="carregador" value="Danificado"> <label>Danificado</label>
             </div> <br>
 
             <div class="checklist">
                 <label>Conectores USB, HDMI, ETHERNET, ETC.</label> <br>
-                <input type="radio" name="conectores" value="Em Condições"> <label>Em Condições</label>
+                <input type="radio" name="conectores" value="Em Condições" value="a" checked> <label>Em Condições</label>
                 <input type="radio" name="conectores" value="Danificado"> <label>Danificado</label>
             </div> <br>
 
             <div class="checklist">
                 <label>Parafusos da Carcaça</label> <br>
-                <input type="radio" name="parafusos" value="Em Condições"> <label>Em Condições</label>
+                <input type="radio" name="parafusos" value="Em Condições" value="a" checked> <label>Em Condições</label>
                 <input type="radio" name="parafusos" value="Faltando"> <label>Faltando</label>
 
                 <details>
@@ -283,14 +310,14 @@
 
             <div class="checklist">
                 <label>Estado do Teclado</label> <br>
-                <input type="radio" name="teclado-estado" value="Em Condições"> <label>Em Condições</label>
+                <input type="radio" name="teclado-estado" value="Em Condições" value="a" checked> <label>Em Condições</label>
                 <input type="radio" name="teclado-estado" value="Danificado"> <label>Danificado</label>
                 <textarea id="obs-teclado" placeholder="Informe Observações"></textarea> 
             </div>
 
             <div class="checklist">
                 <label>Estado do Touchpad</label> <br>
-                <input type="radio" name="touchpad-estado" value="Em Condições"> <label>Em Condições</label>
+                <input type="radio" name="touchpad-estado" value="Em Condições" value="a" checked> <label>Em Condições</label>
                 <input type="radio" name="touchpad-estado" value="Danificado"> <label>Danificado</label>
             </div>
         </fieldset>
@@ -331,6 +358,13 @@
 
 
     <script>
+
+        window.confirm('Ultima atualização : Barra lateral irá sair ao diminuir o tamanho da tela, antes ficava na frente atrapalhando')
+        
+
+
+
+
        async function gerarPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
