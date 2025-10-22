@@ -130,7 +130,7 @@
             font-weight: bold;
             text-align: center;
             padding: 20px;
-            font
+            
 
         }
         
@@ -194,6 +194,7 @@
             font-weight: bold;
             margin-bottom: 10px;
         }
+
 
         details textarea {
             width: 100%;
@@ -303,7 +304,7 @@
                 <input type="radio" name="parafusos" value="Faltando"> <label>Faltando</label>
 
                 <details>
-                    <summary>Faltando parafusos? Informe aqui</summary>
+                    <summary>Concedido Periféricos? Informe aqui!</summary>
                     <textarea id="obs-parafusos"></textarea>
                 </details> 
             </div> <br>
@@ -359,7 +360,7 @@
 
     <script>
 
-        window.confirm('Ultima atualização : Barra lateral irá sair ao diminuir o tamanho da tela, antes ficava na frente atrapalhando')
+        window.confirm('Ultima atualização : Inserido somente os periféricos - em breve mais estilizações')
         
 
 
@@ -466,7 +467,7 @@
         ['Carregador', getRadioValue('carregador')],
         ['Conectores', getRadioValue('conectores')],
         ['Parafusos da Carcaça', getRadioValue('parafusos')],
-        ['Observação Parafusos', document.getElementById('obs-parafusos').value || 'N/A'],
+        ['Periféricos Concedidos', document.getElementById('obs-parafusos').value || 'N/A'],
         ['Estado do Teclado', getRadioValue('teclado-estado')],
         ['Observação Teclado', document.getElementById('obs-teclado').value || 'N/A'],
         ['Estado do Touchpad', getRadioValue('touchpad-estado')],
@@ -551,7 +552,7 @@
         "(e) Em caso de furto ou roubo do equipamento, deverei providenciar o BO com as informações do modelo e número de série do equipamento e enviar para o time da TI. Caso contrário, estou ciente que será tratado o caso como perda e a área em que atuo será responsável por arcar com os custos de reposição de um novo equipamento\n" +
         "(f) No caso de eventual viagem ao exterior, OBRIGO-ME a registrar o equipamento, como bagagem junto à Polícia Federal, ficando ciente de que, na hipótese de o equipamento ser apreendido, serei responsável pelas despesas de multas impostas pelo fisco\n" +
         "(g) Em caso de desligamento, deverei devolver o equipamento nas mesmas condições em que me foi entregue, exceto pelo desgasto normal de uso para TELLERINA COMÉRCIO DE PRESENTES E ARTIGOS PARA DECORAÇÃO S/A,.\n" +
-        "_________________________________________________________________\nAnalista Responsavel : ________________________________________________________";
+        "_________________________________________________________________\nAnalista TI Responsavel : ________________________________________________________";
 
     doc.text(textoFinal, 15, yOffset, { maxWidth: 180 });
     yOffset += doc.getTextDimensions(textoFinal, { maxWidth: 180 }).h + 20;
